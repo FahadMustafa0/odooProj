@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <record model="ir.actions.act_window" id="courseAction">
+        <record model="ir.actions.act_window" id="courselistAction">
             <field name="name">Courses</field>
             <field name="res_model">openacademy.coure</field>
             <field name="view_type">form</field>
@@ -9,9 +9,41 @@
                 <p class="oe_view_nocontent_create">Create the first course</p>
             </field>
         </record>>
-        <menuitem id="mainmenu" />
+        <menuitem id="mainmenu" name="open academy" />
         <menuitem id="main_academymenu" name="open academy" parent="mainmenu"/>
-        <menuitem id="mainmenu" name="open academy" parent="main_academymenu" action="courseAction"/>
+        <menuitem id="mainmenu" name="open academy" parent="main_academymenu" action="courselistAction"/>
+
+
+
+        <record model="ir.ui.view" id="course_form_view">
+            <field name="name">course.form</field>
+            <field name="model">openacademy.course</field>
+            <field name="arch" type="xml">
+                <form string="Course Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <notbook>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                        </notbook>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+        <record model="ir.ui.view" id="course_form_view">
+            <field name="name">course.form</field>
+            <field name="model">openacademy.course</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="description"/>
+                </search>
+         </field>
+        </record>
 
 
 
