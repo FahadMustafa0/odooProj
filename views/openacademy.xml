@@ -118,6 +118,7 @@
                 </calendar>
             </field>
         </record>
+<!-- Graph view       -->
         <record model="ir.ui.view" id="openacademy_session_graph_view">
             <field name="name">openacademy.session.graph</field>
             <field name="model">openacademy.session</field>
@@ -127,6 +128,7 @@
                     <field name="attendees_count" type="measure"/>
                 </graph>
             </field>
+<!-- Kanban view           -->
         </record>
                 <record model="ir.ui.view" id="view_openacad_session_kanban">
             <field name="name">openacademy.session.kanban</field>
@@ -195,6 +197,7 @@
                         <field name="session_id"/>
                         <field name="attendee_ids"/>
                     </group>
+<!--                    adding buttons to wizard-->
                       <footer>
                         <button name="subscribe" type="object"
                                 string="Subscribe" class="oe_highlight"/>
