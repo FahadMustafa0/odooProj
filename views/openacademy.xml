@@ -23,11 +23,21 @@
                     <sheet>
                         <group>
                             <field name="name"/>
+                            <field name="responsible_id"/>
+
                         </group>
                         <notbook>
                             <page string="Description">
                                 <field name="description"/>
                             </page>
+                                <page string="Sessions">
+                                    <field name="session_ids">
+                                        <tree string="Registered sessions">
+                                            <field name="name"/>
+                                            <field name="instructor_id"/>
+                                        </tree>
+                                    </field>
+                                </page>>
                         </notbook>
                     </sheet>
                 </form>
@@ -41,6 +51,7 @@
                 <search>
                     <field name="name"/>
                     <field name="description"/>
+                    <field name="responsible_id"/>
                 </search>
 
          </field>
@@ -53,12 +64,19 @@
             <field name="arch" type="xml">
                 <form string="Session Form">
                     <sheet>
-                        <group>
-                            <field name="name"/>
+                         <group string="General">
+                                <field name="course_id"/>
+                                <field name="name"/>
+                                <field name="instructor_id"/>
+                            </group>
+                        <group string="schedualed">
                             <field name="start_date"/>
                             <field name="duration"/>
                             <field name="seats"/>
+
                         </group>
+                        <label for="attendee_ids"/>
+                        <field name="attendee_ids"/>
                     </sheet>
                 </form>
             </field>
