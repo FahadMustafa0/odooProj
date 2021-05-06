@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api,exceptions
 
 
 class minimalModel(models.Model):
@@ -13,6 +13,15 @@ class Course(models.Model):
     responsible_id = fields.Many2one('res.users',ondelete='set null', string="Responsible", index=True)
     session_ids = fields.One2many('openacademy.session', 'course_id', string="Sessions")
 
+    _sql_constraints = [
+        ('name_description_check',
+         'CHECK(name != description)',
+         "The title of the course should not be the description"),
+
+        ('name_unique',
+         'UNIQUE(name)',
+         "The course title must be unique"),
+    ]
 class Session(models.Model):
 
     _name = 'openacademy.session'
@@ -50,3 +59,9 @@ class Session(models.Model):
                     'message': "Increase seats or remove excess attendees",
                 },
             }
+# Python consta]raint
+    @api.constrains('instructor_id', 'attendee_ids')
+    def _check_instructor_not_in_attendees(self):
+        for r in self:
+            if r.instructor_id and r.instructor_id in r.attendee_ids:
+                raise exceptions.ValidationError("A session's instructor can't be an attendee")
