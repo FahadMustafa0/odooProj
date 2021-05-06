@@ -35,9 +35,10 @@ class Session(models.Model):
     attendee_ids = fields.Many2many('res.partner', string="Attendees")
     taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
 # for calender view
-    start = fields.Datetime.from_string(r.start_date)
-    duration = timedelta(days=r.duration, seconds=-1)
-    r.end_date = start + duration
+    start = fields.Datetime.from_string(start_date)
+    duration = timedelta(days=duration, seconds=-1)
+    end_date = start + duration
+    hours = fields.Float(string="Duration in hours",compute='_get_hours', inverse='_set_hours')
 # comutational field method
     @api.depends('seats', 'attendee_ids')
     def _taken_seats(self):
@@ -46,6 +47,15 @@ class Session(models.Model):
                 r.taken_seats = 0.0
             else:
                 r.taken_seats = 100.0 * len(r.attendee_ids) / r.seats
+
+    @api.depends('duration')
+    def _get_hours(self):
+        for r in self:
+            r.hours = r.duration * 24
+
+    def _set_hours(self):
+        for r in self:
+            r.duration = r.hours / 24
 # Onchange method
     @api.onchange('seats', 'attendee_ids')
     def _verify_valid_seats(self):
