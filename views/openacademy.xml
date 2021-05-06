@@ -11,7 +11,7 @@
         </record>>
         <menuitem id="mainmenu" name="open academy" />
         <menuitem id="main_academymenu" name="open academy" parent="mainmenu"/>
-        <menuitem id="mainmenu" name="open academy" parent="main_academymenu" action="courselistAction"/>
+        <menuitem id="courses_menu" name="open academy" parent="main_academymenu" action="courselistAction"/>
 
 
 
@@ -46,8 +46,34 @@
          </field>
         </record>
 
+<!-- session from view       -->
+ <record model="ir.ui.view" id="session_form_view">
+            <field name="name">session.form</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <form string="Session Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="start_date"/>
+                            <field name="duration"/>
+                            <field name="seats"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+<!--session menu-->
+        <record model="ir.actions.act_window" id="session_list_action">
+            <field name="name">Sessions</field>
+            <field name="res_model">openacademy.session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-
+        <menuitem id="session_menu" name="Sessions"
+                  parent="main_academymenu"
+                  action="session_list_action"/>
 
 
 
