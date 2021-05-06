@@ -29,6 +29,7 @@
         'views/templates.xml',
         'views/openacademy.xml'
         'views/partner.xml'
+        'views/reports.xml'
     ],
     # only loaded in demonstration model
     'demo': [
