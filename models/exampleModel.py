@@ -1,5 +1,5 @@
 from odoo import models, fields, api,exceptions
-
+from datetime import timedelta
 
 class minimalModel(models.Model):
     _name='first_model'
@@ -34,6 +34,10 @@ class Session(models.Model):
     course_id = fields.Many2one('openacademy.course',ondelete='cascade', string="Course", required=True)
     attendee_ids = fields.Many2many('res.partner', string="Attendees")
     taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
+# for calender view
+    start = fields.Datetime.from_string(r.start_date)
+    duration = timedelta(days=r.duration, seconds=-1)
+    r.end_date = start + duration
 # comutational field method
     @api.depends('seats', 'attendee_ids')
     def _taken_seats(self):
