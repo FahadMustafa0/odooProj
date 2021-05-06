@@ -28,8 +28,9 @@
         'views/views.xml',
         'views/templates.xml',
         'views/openacademy.xml'
+        'views/partner.xml'
     ],
-    # only loaded in demonstration mode
+    # only loaded in demonstration model
     'demo': [
         'demo/demo.xml',
     ],

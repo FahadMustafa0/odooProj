@@ -31,7 +31,6 @@
                                 <field name="description"/>
                             </page>
                                 <page string="Sessions">
-                                    
                                     <field name="session_ids">
                                         <tree string="Registered sessions">
                                             <field name="name"/>
