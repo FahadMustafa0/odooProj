@@ -39,8 +39,8 @@ class Session(models.Model):
     duration = timedelta(days=duration, seconds=-1)
     end_date = start + duration
     hours = fields.Float(string="Duration in hours",compute='_get_hours', inverse='_set_hours')
-    attendees_count = fields.Integer(
-        string="Attendees count", compute='_get_attendees_count', store=True)
+    attendees_count = fields.Integer(string="Attendees count", compute='_get_attendees_count', store=True)
+    color = fields.Integer()
 
     @api.depends('attendee_ids')
     def _get_attendees_count(self):
