@@ -3,18 +3,6 @@ from datetime import timedelta
 
 from odoo import _, api, exceptions, fields, models
 
-STATE_DRAFT = 'draft'
-
-STATE_CONFIRMED = 'confirmed'
-
-STATE_DONE = 'done'
-
-STATE_CHOICES = [
-    (STATE_DRAFT, 'Draft'),
-    (STATE_CONFIRMED, 'Confirmed'),
-    (STATE_DONE, 'Done'),
-]
-
 
 class Course(models.Model):
     _name = 'openacademy.course'
