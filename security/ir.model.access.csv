@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_openacado_openacado,openacado.openacado,model_openacado_openacado,openacado.group_manager,1,1,1,1
+access_openacademy_session,openacademy.session,model_openacademy_session,openacado.group_manager,1,1,1,1
+access_openacademy_wizard,openacademy.wizard,model_openacademy_wizard,openacado.group_manager,1,1,1,1

@@ -1,0 +1,271 @@
+<odoo>
+        <!-- explicit list view definition -->
+        <!--   openacad model form view-->
+        <record model="ir.ui.view" id="openacado.list0">
+            <field name="name">openacado list0</field>
+            <field name="model">openacado.openacado</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="responsible_id"/>
+                    </group>
+                    <group>
+                        <field name="session_ids">
+                            <tree string="Registered sessions">
+                                <field name="name"/>
+                                <field name="instructor_id"/>
+                            </tree>
+                        </field>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+        <!--openacad model tree view-->
+        <record model="ir.ui.view" id="openacado.list1">
+            <field name="name">openacado list1</field>
+            <field name="model">openacado.openacado</field>
+            <field name="arch" type="xml">
+                <tree>
+
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="responsible_id"/>
+
+                </tree>
+            </field>
+        </record>
+        <!--openacad model search view-->
+        <record model="ir.ui.view" id="openacado.list2">
+            <field name="name">openacado list2</field>
+            <field name="model">openacado.openacado</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="responsible_id"/>
+                    <filter name="my_courses" string="My Courses"
+                            domain="[('responsible_id', '=', uid)]"/>
+                    <group string="Group by">
+                        <filter name="by_responsible" string="Responsible"
+                                context="{'group_by': 'responsible_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--        kanban for openacado-->
+
+        <!--        kanban view-->
+
+        <record model="ir.ui.view" id="view_openacad_session_kanban">
+            <field name="name">openacado.kanban</field>
+            <field name="model">openacado.openacado</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <!--                       <field name="color"/>-->
+                    <templates>
+                        <t t-name="kanban-box">
+
+                            <div t-attf-class="oe_kanban_content">
+                                <!-- title -->
+                                Course name:
+                                <field name="name"/>
+                                <br/>
+                                Course Description:
+                                <field name="description"/>
+                                <br/>
+
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!--        action window openacado model-->
+        <record model="ir.actions.act_window" id="openacado.action_window">
+            <field name="name">openacado window</field>
+            <field name="type">ir.actions.act_window</field>
+            <!--            making default search  -->
+            <field name="context" eval="{'search_default_my_courses': 1}"/>
+            <field name="res_model">openacado.openacado</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+        <menuitem name="openacado" id="openacado.menu_root"/>
+
+        <!-- menu categories -->
+
+        <menuitem name="Main" id="openacado.menu_1" parent="openacado.menu_root"/>
+        <menuitem name="Course" id="openacado.menu_1_list" parent="openacado.menu_1"
+                  action="openacado.action_window"/>
+
+        <!--        session model form view-->
+
+        <record model="ir.ui.view" id="session_form_view">
+            <field name="name">session.form</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="General">
+                        <field name="course"/>
+                        <field name="name"/>
+                        <field name="instructor_id"/>
+                    </group>
+                    <group string="Schedule">
+                        <field name="start_date"/>
+                        <field name="duration"/>
+                        <field name="seats"/>
+                        <field name="taken_seats" widget="progressbar"/>
+                    </group>
+                    <group>
+                        <label for="attendee_ids"/>
+                        <field name="attendee_ids"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Session tree list -->
+        <record model="ir.ui.view" id="session_tree_view">
+            <field name="name">session.tree</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+
+                <!--    Advanced  tree view    duraion color change      -->
+                <tree string="Session Tree" decoration-info="duration&lt;5" decoration-danger="duration&gt;15">
+
+                    <field name="name"/>
+                    <field name="course"/>
+                    <field name="duration" invisible="1"/>
+                    <field name="instructor_id"/>
+                    <field name="start_date"/>
+                    <field name="seats"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        calender view-->
+        <record model="ir.ui.view" id="session_calendar_view">
+            <field name="name">session.calendar</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <calendar string="Session Calendar" date_start="start_date" color="instructor_id">
+                    <field name="name"/>
+                </calendar>
+            </field>
+        </record>
+
+        <!--        kanban view-->
+        <record model="ir.ui.view" id="view_openacad_session_kanban">
+            <field name="name">openacademy.session.kanban</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="course">
+                    <field name="name"/>
+                    <field name="course"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div>
+                                <div class="oe_dropdown_kanban">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <i class="fa fa-bars fa-lg"/>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                        </ul>
+                                        <ul class="oe_dropdown_menu">
+
+                                            <li>
+                                                <field name="name"/>
+                                            </li>
+                                            <li>
+                                                <field name="course"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- gantt view-->
+
+        <!--        <record model="ir.ui.view" id="session_gantt_view">-->
+        <!--            <field name="name">session.gantt</field>-->
+        <!--            <field name="model">openacademy.session</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <gantt string="Session Gantt"-->
+        <!--                       date_start="start_date"-->
+        <!--                       default_group_by='instructor_id'>-->
+        <!--                    &lt;!&ndash; <field name="name"/> this is not required after Odoo 10.0 &ndash;&gt;-->
+        <!--                </gantt>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--    graph view-->
+
+        <record model="ir.ui.view" id="openacademy_session_graph_view">
+            <field name="name">openacademy.session.graph</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <graph>
+                    <field name="course"/>
+                </graph>
+            </field>
+        </record>
+        <!-- actions opening views on models -->
+        <!--openacad model action-->
+        <record model="ir.actions.act_window" id="openacado.action_window1">
+            <field name="name">session window1</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">openacademy.session</field>
+            <field name="view_mode">tree,form,calendar,graph,kanban</field>
+        </record>
+
+        <!-- sub menu item -->
+        <menuitem name="Sessions" id="openacado.menu_2" parent="openacado.menu_root"/>
+        <!-- actions -->
+        <menuitem name="Server to list" id="openacado" parent="openacado.menu_2"
+                  action="openacado.action_window1"/>
+
+<!--                   Wizard view                       -->
+       <record model="ir.ui.view" id="wizard_form_view">
+            <field name="name">wizard.form</field>
+            <field name="model">openacademy.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Add Attendees">
+                    <group>
+                        <field name="session_id"/>
+                        <field name="attendee_ids"/>
+                    </group>
+                     <footer>
+                        <button name="subscribe" type="object"
+                                string="Subscribe" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+                <!--Wizard   Action-->
+        <record model="ir.actions.act_window" id="launch_session_wizard">
+                    <field name="name">Add Attendees</field>
+                    <field name="res_model">openacademy.wizard</field>
+                    <field name="view_mode">form</field>
+                    <field name="target">new</field>
+                    <field name="binding_model_id" ref="model_openacademy_session" />
+
+       </record>
+
+
+
+</odoo>
